@@ -163,12 +163,12 @@ int main(int argc, char *argv[]){
     cout << "You will burp blood. Are you sure ? (y/n) : ";
     char validation;
     cin >> validation;
-    if (validation != 'y'){
+    if (validation != 'y' && validation != 'Y'){
       cout << "Abording the mission" << endl;
       return 1;
     }
-    gobackNline(1);
   }
+  //cout << "\n";
 
   // Main code ###############################################################
   vector<vector<int>> tab(3, vector<int>(difficulty, 0));
