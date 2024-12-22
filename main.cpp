@@ -38,10 +38,10 @@ void show_hanoi(const vector<vector<int>> tab, int const size){
     cout << endl;
   }
   char keybind[3] = {'j', 'k', 'l'};
-  for (int key = 0; key < 3; key++){
+  for (auto key: keybind){
     cout << ' ';
     for (int i = 0; i < (size); i++){ cout << "_"; }
-    cout << keybind[key];
+    cout << key;
     for (int i = 0; i < (size); i++){ cout << "_"; }
   }
   cout << endl << endl;
@@ -57,6 +57,31 @@ void debug_show_hanoi(const vector<vector<int>> tab, int const size){
   cout << endl;
 }
 
+int _index_top(const vector<int> colum, int const size){
+  for (int i = size-1; i >= 0; i--){
+    if (colum[i] != 0){
+      return i;
+    }
+  }
+  return -1;
+}
+
+bool move_disc(vector<vector<int>>& tab, int const size,
+               const pair<int, int> paircol){
+  // si la valeur du second est plus grande que celle su premier
+  // ne rien faire
+  if (tab[paircol.second][_index_top(tab[paircol.second], size)] < 
+      tab[paircol.first][_index_top(tab[paircol.first], size)]
+      && tab[paircol.second][_index_top(tab[paircol.second], size)] != 0){
+    return false;
+  }
+  // déplacer le palet
+  tab[paircol.second][_index_top(tab[paircol.second], size) + 1] = 
+    tab[paircol.first][_index_top(tab[paircol.first], size)];
+  tab[paircol.first][_index_top(tab[paircol.first], size)] = 0;
+  return true;
+}
+
 int key_2_int(char const key){
   switch (key) {
     case 'j':
@@ -65,23 +90,24 @@ int key_2_int(char const key){
       return 1;
     case 'l':
       return 2;
-    case 127:
+    case 127: // del
       return 9;
     default :
       return -1;
   }
 }
 
-pair<int, int> ask_colum(){
-  int f, s;
+bool ask_colum(vector<vector<int>>& tab, int const size){
+  int first_value;
   char key;
 
   while (1){
     while (true){
       if(keyIsPressed(key)){
         int value = key_2_int(key);
-        if (value != -1 and value != 9){
-          f = value;
+        if (value != -1 and value != 9 and 
+            _index_top(tab[value], size) != -1){
+          first_value = value;
           break;
         }
       }
@@ -98,38 +124,17 @@ pair<int, int> ask_colum(){
             cout << '\r' << "      " << '\r';
             fflush(stdout);
             break; // pass (go to the begining)
-          } else if (value != f) {
-            s = value;
+          } else if (value != first_value and 
+                     move_disc(tab, size, std::pair(first_value, value))) {
             cout << "| " << key << ' ';
-            return {f, s};
+            return true;
             break;
           }
         }
       }
     }
   }
-}
-
-int _index_top(const vector<int> colum, int const size){
-  for (int i = size-1; i >= 0; i--){
-    if (colum[i] != 0){
-      return i;
-    }
-  }
-  return -1;
-}
-
-bool move_disc(vector<vector<int>>& tab, int const size,
-               const pair<int, int> paircol){
-  if (tab[paircol.second][_index_top(tab[paircol.second], size)] < 
-      tab[paircol.first][_index_top(tab[paircol.first], size)]
-      && tab[paircol.second][_index_top(tab[paircol.second], size)] != 0){
-    return false;
-  }
-  tab[paircol.second][_index_top(tab[paircol.second], size) + 1] = 
-    tab[paircol.first][_index_top(tab[paircol.first], size)];
-  tab[paircol.first][_index_top(tab[paircol.first], size)] = 0;
-  return true;
+  return false;
 }
 
 bool not_finished(const vector<vector<int>> tab, int const size){
@@ -175,20 +180,16 @@ int main(int argc, char *argv[]){
     tab[0][i] = difficulty - i;
   }
 
-  bool done = true;
   enableNonBlockingMode();
 
   show_hanoi(tab, difficulty);
   while (not_finished(tab, difficulty)){
     
-    auto colum_to_change = ask_colum();
-
-    done = move_disc(tab, difficulty, colum_to_change);
+    ask_colum(tab, difficulty);    
     
-    if (done){
-      gobackNline(difficulty + 3);
-      show_hanoi(tab, difficulty);
-    }
+    gobackNline(difficulty + 3);
+    show_hanoi(tab, difficulty);
+    
   }
 
   disableNonBlockingMode();
