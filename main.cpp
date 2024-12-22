@@ -168,7 +168,6 @@ int main(int argc, char *argv[]){
       return 1;
     }
   }
-  //cout << "\n";
 
   // Main code ###############################################################
   vector<vector<int>> tab(3, vector<int>(difficulty, 0));
@@ -192,7 +191,6 @@ int main(int argc, char *argv[]){
     }
   }
 
-    
   disableNonBlockingMode();
 
   return 0;
