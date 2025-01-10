@@ -3,13 +3,18 @@ A CLI version of the Hanoi tower game.
 
 ![Démonstration](https://github.com/lolaitu/Hanoi-Tower/releases/download/untagged-eef9d813cfec9b74169a/demo.gif)
 
-## Requirement
+# Requirement
 You will need Linux.  
 Windows is too much work (I don't want to)
-  
-## Instalation
+<br/>
+<br/>
 
-### Make from source (recommended)
+# Instalation
+<br/>
+
+## Make from source (recommended)
+<br/>
+
 1. Clone the repository :
 ```bash
 git clone https://github.com/lolaitu/Hanoi-Tower.git
@@ -22,24 +27,31 @@ cd Hanoi-Tower
 ```bash
 make install
 ```
-  
+<br/>
+
 > [!NOTE]
-> Make sur that ~/.local/bin is correctly included in your $PATH.
-  
+> Make sur that `~/.local/bin` is correctly included in your $PATH.
+<br/>
+
 If you just want to try, type :
 
 ```bash
 make run
 ```
-  
-### Release
-Download the latest release from the [![Latest Release](https://img.shields.io/badge/Release-Latest-blue?logo=github)](https://github.com/lolaitu/Hanoi-Tower/releases) page.  
+<br/>
+
+## Release
+<br/>
+
+Download the latest release from the  [![Latest Release](https://img.shields.io/badge/Release-Latest-blue?logo=github)](https://github.com/lolaitu/Hanoi-Tower/releases)  page.  
 > [!NOTE]
 > If it wouldn't lauch maybe you didn't give it permission.
-  
-## Uninstallation
+<br/>
 
-when in Hanoi-Tower/ , type in :
+# Uninstallation
+<br/>
+
+when in `Hanoi-Tower/` , type in :
 ```bash
 make uninstall
 ```
