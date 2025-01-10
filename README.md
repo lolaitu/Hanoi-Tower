@@ -33,7 +33,7 @@ make run
 ```
   
 ### Release
-Download the latest release from the [![Latest Release](https://img.shields.io/github/v/release/lolaitu/Hanoi-Tower)](https://github.com/lolaitu/Hanoi-Tower/releases) page.  
+Download the latest release from the [![Latest Release](https://img.shields.io/badge/Release-Latest-blue?logo=github)](https://github.com/lolaitu/Hanoi-Tower/releases) page.  
 > [!NOTE]
 > If it wouldn't lauch maybe you didn't give it permission.
   
