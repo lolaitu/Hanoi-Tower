@@ -4,6 +4,7 @@
 #include <utility>
 
 #include "keyboard.hpp"
+#include "help.hpp"
 
 using namespace std;
 
@@ -25,7 +26,7 @@ void _show_part(int nb, int size){
     cout << "\033[" << 97 << "m";
     for (int i = 0; i < (size - nb); i++){ cout << " "; }
   }
-  
+
 }
 
 void show_hanoi(const vector<vector<int>> tab, int const size){
@@ -70,13 +71,13 @@ bool move_disc(vector<vector<int>>& tab, int const size,
                const pair<int, int> paircol){
   // si la valeur du second est plus grande que celle su premier
   // ne rien faire
-  if (tab[paircol.second][_index_top(tab[paircol.second], size)] < 
+  if (tab[paircol.second][_index_top(tab[paircol.second], size)] <
       tab[paircol.first][_index_top(tab[paircol.first], size)]
       && tab[paircol.second][_index_top(tab[paircol.second], size)] != 0){
     return false;
   }
   // déplacer le palet
-  tab[paircol.second][_index_top(tab[paircol.second], size) + 1] = 
+  tab[paircol.second][_index_top(tab[paircol.second], size) + 1] =
     tab[paircol.first][_index_top(tab[paircol.first], size)];
   tab[paircol.first][_index_top(tab[paircol.first], size)] = 0;
   return true;
@@ -99,13 +100,14 @@ int key_2_int(char const key){
 
 bool ask_colum(vector<vector<int>>& tab, int const size){
   int first_value;
-  char key;
+  char key, first_key;
 
   while (1){
     while (true){
       if(keyIsPressed(key)){
+        first_key = key;
         int value = key_2_int(key);
-        if (value != -1 and value != 9 and 
+        if (value != -1 and value != 9 and
             _index_top(tab[value], size) != -1){
           first_value = value;
           break;
@@ -124,9 +126,12 @@ bool ask_colum(vector<vector<int>>& tab, int const size){
             cout << '\r' << "      " << '\r';
             fflush(stdout);
             break; // pass (go to the begining)
-          } else if (value != first_value and 
+          } else if (value != first_value and
                      move_disc(tab, size, std::pair(first_value, value))) {
-            cout << "| " << key << ' ';
+            cout << '\r' << "      " << '\r';
+            cout << "\033[90m";
+            cout << ' ' << first_key << " | " << key << ' ';
+            cout << "\033[97m";
             return true;
             break;
           }
@@ -148,10 +153,10 @@ bool not_finished(const vector<vector<int>> tab, int const size){
 
 int main(int argc, char *argv[]){
   int difficulty = 4;
-  
+
   if (argc >= 2){
     if (strcmp(argv[1], "--help") == 0){
-      cout << "figure it out yourself moron !!!" << endl;
+      print_help();
       return 0;
     } else {
       try {
@@ -184,12 +189,12 @@ int main(int argc, char *argv[]){
 
   show_hanoi(tab, difficulty);
   while (not_finished(tab, difficulty)){
-    
-    ask_colum(tab, difficulty);    
-    
+
+    ask_colum(tab, difficulty);
+
     gobackNline(difficulty + 3);
     show_hanoi(tab, difficulty);
-    
+
   }
 
   disableNonBlockingMode();
