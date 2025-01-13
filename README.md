@@ -5,6 +5,7 @@ A CLI version of the Hanoi tower game.
 
 # Requirement
 You will need Linux.  
+
 Windows is too much work (I don't want to)
 <br/>
 <br/>
@@ -15,6 +16,16 @@ Windows is too much work (I don't want to)
 ## Make from source (recommended)
 <br/>
 
+### Dependecy
+You will need to have `make` and `g++`.  
+
+For exemple with debian based distro : 
+```bash
+sudo apt install make g++
+```
+<br/>
+
+### Install
 1. Clone the repository :
 ```bash
 git clone https://github.com/lolaitu/Hanoi-Tower.git
